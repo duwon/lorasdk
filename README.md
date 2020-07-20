@@ -1,12 +1,18 @@
 # lorasdk
 Scripts and files for LoRa gateway produced by Heltec automation(TM). This file should work with raspberry pi.
 
-## install
-- clone this project into raspberry pi, and lorasdk and packet_forwarder should in a same folder. e.g. 
-![image](route.jpg)
+## Install
+- clone this project into raspberry pi
 
   ```bash
-  cd /home/pi/lora/lorasdk
-  chmod +x install.sh
-  ./install.sh
+  mkdir lora
+  cd lora
+  git clone https://github.com/duwon/lorasdk.git
+  cd lorasdk
+  chmod +x lora_install.sh
+  ./lora_install.sh
   ```
+- [Configuration  - lora_config.md](lora_config.md)
+
+## Install Raspberry PI OS(32bit)
+  https://embedded.duwon.net/21

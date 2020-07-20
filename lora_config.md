@@ -101,9 +101,9 @@
   ```
 - Edit
   ```vi
-    dsn="postgres://loraserver_as:62374838@localhost/loraserver_as?sslmode=disable"
-    username="loraappserver"
-    password="62374838"
+    dsn="postgres://chirpstack_as:62374838@localhost/loraserver_as?sslmode=disable"
+    username="loraappserver" #MQTT User
+    password="62374838" #MQTT password
     bind="localhost:8080"
     jwt_secret="openssl rand -base64 32"
   ```
