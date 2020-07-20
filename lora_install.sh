@@ -3,13 +3,14 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1CE2AFD36DBCCA00
 sudo echo "deb https://artifacts.chirpstack.io/packages/3.x/deb stable main" | sudo tee /etc/apt/sources.list.d/chirpstack.list
 
 #Gateway Driver, Packet forwarder, SDK Install
+cd ~
 mkdir lora
 cd lora
 sudo apt-get update
 sudo apt-get install git
 git clone https://github.com/Lora-net/lora_gateway.git # lora Gateway Drivers
 git clone https://github.com/Lora-net/packet_forwarder.git # packet forwarding software
-git clone https://github.com/HelTecAutomation/lorasdk.git # This is a script package we made for our own product to implement the semi-automatic installation of the raspberry pie end lora service
+#git clone https://github.com/HelTecAutomation/lorasdk.git # This is a script package we made for our own product to implement the semi-automatic installation of the raspberry pie end lora service
 cd /home/pi/lora/lora_gateway
 make clean all
 cd /home/pi/lora/packet_forwarder
