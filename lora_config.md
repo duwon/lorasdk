@@ -2,10 +2,10 @@
 # Configuration Authentication and Mosquitto
 - Add mosquitto users and password
   ```bash
-  sudo mosquitto_passwd -c /etc/mosquitto/pwd loraroot # Create a root user. After entering this command, you will be allowed to set and confirm a password. In this experiment, the passwords related to mosquitto are all 62374838.
+  sudo mosquitto_passwd -c /etc/mosquitto/pwd loraroot # Create a root user. After entering this command, you will be allowed to set and confirm a password. In this experiment, the passwords related to mosquitto are all password.
   sudo mosquitto_passwd /etc/mosquitto/pwd loragw # Create a user named “loragw” for use with lora-gateway-bridge
   sudo mosquitto_passwd /etc/mosquitto/pwd loraserver # This user is used by "loraserver"
-  sudo mosquitto_passwd /etc/mosquitto/pwd loraappserver # This user uses "lora-app-server" 62374838
+  sudo mosquitto_passwd /etc/mosquitto/pwd loraappserver # This user uses "lora-app-server" password
   sudo chmod 600 /etc/mosquitto/pwd # Pwd file encryption
   sudo vi /etc/mosquitto/conf.d/local.conf # Open the local.conf file with the vi editor, add the following content to it and save and exit;
   ```
@@ -30,19 +30,19 @@
   ```
 - Add databases and users
   ```mysql
-    > create role chirpstack_ns with login password '62374838';
-    > create database chirpstack_ns with owner chirpstack_ns;
-    > create role chirpstack_as with login password '62374838';
-    > create database chirpstack_as with owner chirpstack_as;
-    > \c chirpstack_as
+    > create role lora_ns with login password 'password';
+    > create database lora_ns with owner lora_ns;
+    > create role lora_as with login password 'password';
+    > create database lora_as with owner lora_as;
+    > \c lora_as
     > create extension pg_trgm;
     > create extension hstore;
     > \q
   ```
 - Check 
   ```bash
-  psql -h localhost -U chirpstack_ns -W chirpstack_ns
-  psql -h localhost -U chirpstack_as -W chirpstack_as
+  psql -h localhost -U lora_ns -W lora_ns
+  psql -h localhost -U lora_as -W lora_as
   ```
 
 
@@ -57,9 +57,10 @@
   ```
 - Edit chirpstack-gateway-bridge.toml
   ```vi
+    udp_bind = "127.0.0.1:1700"  
     server="tcp://127.0.0.1:1883"
     username="loragw"
-    password="62374838"
+    password="password"
   ```
 - Run
   ```bash
@@ -77,12 +78,11 @@
   ```
 - Edit
   ```vi
-    dsn="postgres://chirpstack_ns:62374838@localhost/chirpstack_ns?lmode=disable"
+    dsn="postgres://lora_ns:password@localhost/chirpstack_ns?lmode=disable"
     name="KR920"
     bind="127.0.0.1:8000"
     username="loraserver"
-    password="62374838"
-    jwt_secret="openssl rand -base64 32"
+    password="password"
   ```
 - Restart
   ```bash
@@ -101,9 +101,9 @@
   ```
 - Edit
   ```vi
-    dsn="postgres://chirpstack_as:62374838@localhost/loraserver_as?sslmode=disable"
+    dsn="postgres://lora_as:password@localhost/loraserver_as?sslmode=disable"
     username="loraappserver" #MQTT User
-    password="62374838" #MQTT password
+    password="password" #MQTT password
     bind="localhost:8080"
     jwt_secret="openssl rand -base64 32"
   ```
@@ -120,9 +120,9 @@
 # Check Status
 ```bash
 sudo systemctl status mosquitto #Check if mosquitto is running
+sudo systemctl status lora-gateway-bridge # Check if lora-gateway-bridge is running
 sudo systemctl status loraserver #Check if loricaserver is running
 sudo systemctl status lora-app-server # Check if lora-app-server is running
-sudo systemctl status lora-gateway-bridge # Check if lora-gateway-bridge is running
 ```
 
 
@@ -161,7 +161,7 @@ sudo systemctl status lora-gateway-bridge # Check if lora-gateway-bridge is runn
 
 # 패킷 캡처
   ```bash
-  sudo tcpdump -i lo port 1800
+  sudo tcpdump -i lo port 1700
   ```
 
 
