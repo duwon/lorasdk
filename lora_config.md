@@ -174,3 +174,14 @@ sudo systemctl status lora-app-server # Check if lora-app-server is running
   sudo ufw disable
   sudo ufw allow 8080
   ```
+
+
+# Lora Application Data 확인
+  ```bash
+  mosquitto_sub -h 127.0.0.1 -p 1883 -u loraappserver -P password -t "application/1/#" -v # Application ID 1의 모든 데이터 구독
+  mosquitto_sub -h 127.0.0.1 -p 1883 -u loraappserver -P password -t "application/1/device/+/join" -v # 모든 디바이스의 join 메시지 구독
+  mosquitto_sub -h 127.0.0.1 -p 1883 -u loraappserver -P password -t "application/1/device/2232330000888802/join" -v # Dev Eui가 2232330000888802인 join 메시지 구독
+  mosquitto_sub -h 127.0.0.1 -p 1883 -u loraappserver -P password -t "application/1/device/+/rx" -v # 모든 디바이스의 rx 메시지 구독
+  mosquitto_sub -h 127.0.0.1 -p 1883 -u loraappserver -P password -t "application/1/device/2232330000888802/rx" -v # Dev Eui가 2232330000888802인 rx 메시지 구독
+  mosquitto_sub -h 127.0.0.1 -p 1883 -u loraappserver -P password -t "application/1/device/2232330000888802/+" -v # Dev Eui가 2232330000888802인 모든 메시지 구독
+  ```
