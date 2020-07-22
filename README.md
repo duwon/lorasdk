@@ -2,6 +2,7 @@
 Scripts and files for LoRa gateway produced by Heltec automation(TM). This file should work with raspberry pi.
 
 ## Install
+- Install Raspberry PI OS(32bit)  https://embedded.duwon.net/21
 - clone this project into raspberry pi
 
   ```bash
@@ -13,6 +14,3 @@ Scripts and files for LoRa gateway produced by Heltec automation(TM). This file 
   ./lora_install.sh
   ```
 - [Configuration  - lora_config.md](lora_config.md)
-
-## Install Raspberry PI OS(32bit)
-  https://embedded.duwon.net/21
