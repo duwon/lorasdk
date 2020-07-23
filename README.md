@@ -10,7 +10,7 @@ Scripts and files for LoRa gateway produced by Heltec automation(TM). This file 
   cd lora
   git clone https://github.com/duwon/lorasdk.git
   cd lorasdk
-  chmod +x lora_install.sh
-  ./lora_install.sh
+  chmod +x install_gw.sh
+  ./install_gw.sh
   ```
-- [Configuration  - lora_config.md](lora_config.md)
+- [Configuration  - config_gw.md](config_gw.md)

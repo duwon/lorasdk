@@ -5,7 +5,7 @@
   sudo mosquitto_passwd -c /etc/mosquitto/pwd loraroot # Create a root user. After entering this command, you will be allowed to set and confirm a password. In this experiment, the passwords related to mosquitto are all password.
   sudo mosquitto_passwd /etc/mosquitto/pwd loragw # Create a user named “loragw” for use with lora-gateway-bridge
   sudo mosquitto_passwd /etc/mosquitto/pwd loraserver # This user is used by "loraserver"
-  sudo mosquitto_passwd /etc/mosquitto/pwd loraappserver # This user uses "lora-app-server" password
+  sudo mosquitto_passwd /etc/mosquitto/pwd loraappserver # This user uses "lora-app-server"
   sudo chmod 600 /etc/mosquitto/pwd # Pwd file encryption
   sudo vi /etc/mosquitto/conf.d/local.conf # Open the local.conf file with the vi editor, add the following content to it and save and exit;
   ```
@@ -57,7 +57,7 @@
   ```
 - Edit chirpstack-gateway-bridge.toml
   ```vi
-    udp_bind = "127.0.0.1:1700"  
+    udp_bind = "0.0.0.0:1700"  
     server="tcp://127.0.0.1:1883"
     username="loragw"
     password="password"
@@ -78,9 +78,9 @@
   ```
 - Edit
   ```vi
-    dsn="postgres://lora_ns:password@localhost/chirpstack_ns?lmode=disable"
+    dsn="postgres://lora_ns:password@localhost/lora_ns?lmode=disable"
     name="KR920"
-    bind="127.0.0.1:8000"
+    bind="0.0.0.0:8000"
     username="loraserver"
     password="password"
   ```
@@ -101,10 +101,10 @@
   ```
 - Edit
   ```vi
-    dsn="postgres://lora_as:password@localhost/loraserver_as?sslmode=disable"
+    dsn="postgres://lora_as:password@localhost/lora_as?sslmode=disable"
     username="loraappserver" #MQTT User
     password="password" #MQTT password
-    bind="localhost:8080"
+    bind="0.0.0.0:8080"
     jwt_secret="openssl rand -base64 32"
   ```
 - Restart
@@ -118,18 +118,19 @@
 
 
 # Check Status
-```bash
-sudo systemctl status mosquitto #Check if mosquitto is running
-sudo systemctl status lora-gateway-bridge # Check if lora-gateway-bridge is running
-sudo systemctl status loraserver #Check if loricaserver is running
-sudo systemctl status lora-app-server # Check if lora-app-server is running
-```
+- 서비스 정상 작동 확인
+  ```bash
+  sudo systemctl status mosquitto #Check if mosquitto is running
+  sudo systemctl status lora-gateway-bridge # Check if lora-gateway-bridge is running
+  sudo systemctl status loraserver #Check if loricaserver is running
+  sudo systemctl status lora-app-server # Check if lora-app-server is running
+  ```
 
 
 
 
 
-# Configure Influx Database
+# Configure Influx Database - MQTT 사용시 필요 없음
 - Open configuration file
   ```bash
   sudo vi /etc/influxdb/influxdb.conf
@@ -168,7 +169,7 @@ sudo systemctl status lora-app-server # Check if lora-app-server is running
 
 
 
-# 방확벽 설정
+# 방확벽 설정 - 설정 필요 없음
   ```bash
   sudo apt install ufw
   sudo ufw disable

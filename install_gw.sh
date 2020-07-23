@@ -16,31 +16,31 @@ sudo apt-get install git
 git clone https://github.com/Lora-net/lora_gateway.git # lora Gateway Drivers
 git clone https://github.com/Lora-net/packet_forwarder.git # packet forwarding software
 #git clone https://github.com/HelTecAutomation/lorasdk.git
+
 cd /home/pi/lora/lora_gateway
 make clean all
 cd /home/pi/lora/packet_forwarder
 make clean all
 cd /home/pi/lora/lorasdk
-chmod +x install.sh # dca632FFFE9015e6
-./install.sh #Run the script. After the script is run, it will create a service named "lrgateway". The purpose is to make the lora driver and data forwarding program run automatically at startup.
-sudo cp -f /global_conf_KR920.json global_conf.json
-
+chmod +x install_pkt_fwd.sh
+./install_pkt_fwd.sh #Run the script. After the script is run, it will create a service named "lrgateway". The purpose is to make the lora driver and data forwarding program run automatically at startup.
+sudo cp -f /home/pi/lora/lorasdk/global_conf_KR920.json /home/pi/lora/packet_forwarder/lora_pkt_fwd/global_conf.json
 
 ############ Installation Relative Tool Chain
-sudo apt install mosquitto mosquitto-clients redis-server redis-tools postgresql tcpdump ufw
+sudo apt install mosquitto mosquitto-clients redis-server redis-tools postgresql tcpdump ufw influxdb
 
 ############ Gateway Bridge Install
 sudo apt-get install chirpstack-gateway-bridge
-#sudo systemctl start chirpstack-gateway-bridge # [start|stop|restart|status]
+sudo cp -f chirpstack-gateway-bridge.toml /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
 sudo systemctl enable chirpstack-gateway-bridge
+sudo systemctl start chirpstack-gateway-bridge # [start|stop|restart|status]
 
 ############ Installing LoRa Network Server
 sudo apt-get install chirpstack-network-server
-#sudo systemctl start chirpstack-network-server #[start|stop|restart|status]
+sudo cp -f chirpstack-network-server.toml /etc/chirpstack-network-server/chirpstack-network-server.toml
+sudo systemctl start chirpstack-network-server #[start|stop|restart|status]
 
 ############ Installing the LoRa App Server
 sudo apt-get install chirpstack-application-server
-#sudo systemctl start chirpstack-application-server #[start|stop|restart|status] 
-
-############ Install Infulx DB
-sudo apt-get install influxdb
+sudo cp -f chirpstack-application-server.toml /etc/chirpstack-application-server/chirpstack-application-server.toml
+sudo systemctl start chirpstack-application-server #[start|stop|restart|status] 
