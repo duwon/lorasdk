@@ -30,14 +30,14 @@
   ```
 - Add databases and users
   ```mysql
-    > create role lora_ns with login password 'password';
-    > create database lora_ns with owner lora_ns;
-    > create role lora_as with login password 'password';
-    > create database lora_as with owner lora_as;
-    > \c lora_as
-    > create extension pg_trgm;
-    > create extension hstore;
-    > \q
+  create role lora_ns with login password 'password';
+  create database lora_ns with owner lora_ns;
+  create role lora_as with login password 'password';
+  create database lora_as with owner lora_as;
+  \c lora_as
+  create extension pg_trgm;
+  create extension hstore;
+  \q
   ```
 - Check 
   ```bash
