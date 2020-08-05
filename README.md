@@ -14,3 +14,8 @@ Scripts and files for LoRa gateway produced by Heltec automation(TM). This file 
   ./install_gw.sh
   ```
 - [Configuration  - config_gw.md](config_gw.md)
+
+
+## ETC
+Add arduino conf
+https://resource.heltec.cn/download/package_CubeCell_index.json
